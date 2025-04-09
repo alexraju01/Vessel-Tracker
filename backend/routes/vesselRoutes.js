@@ -1,8 +1,15 @@
 const express = require("express");
-const { addVessel } = require("../controllers/vesselController");
+const {
+	addVessel,
+	deleteVessel,
+	getVessels,
+	updateVessel,
+} = require("../controllers/vesselController");
 
 const router = express.Router();
 
-router.post("/", addVessel);
+router.route("/").get(getVessels).post(addVessel);
+
+router.route("/:id").patch(updateVessel).delete(deleteVessel);
 
 module.exports = router;
