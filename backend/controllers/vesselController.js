@@ -1,3 +1,4 @@
+const vessel = require("../models/vessel");
 const Vessel = require("../models/vessel");
 
 // POST add vessel
