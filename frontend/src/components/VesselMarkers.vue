@@ -1,34 +1,37 @@
-<!-- components/VesselMarkers.vue -->
+<!-- VesselMarkers.vue -->
 <script setup>
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
+import { AdvancedMarker } from "vue3-google-map";
 
-const props = defineProps({
-  map: {
-    type: Object,
-    required: true,
-  },
-});
+// Reactive array to store vessel marker positions
+const vesselMarkers = ref([]);
 
-const loadMarkers = async () => {
+// Fetch vessel data on component mount
+const fetchVesselData = async () => {
   try {
     const response = await fetch("http://localhost:3000/api/vessels");
-    const vessels = await response.json();
 
-    vessels.data.forEach((vessel) => {
-      const { latitude, longitude, name } = vessel;
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
 
-      new window.google.maps.Marker({
-        position: { lat: latitude, lng: longitude },
-        map: props.map,
-        title: name,
-      });
-    });
-  } catch (err) {
-    console.error("⚠️ Failed to load vessel markers:", err);
+    const { data } = await response.json();
+
+    vesselMarkers.value = data.map(({ latitude, longitude }) => ({
+      position: { lat: latitude, lng: longitude },
+    }));
+  } catch (error) {
+    console.error("Error fetching vessel data:", error);
   }
 };
 
-onMounted(() => {
-  if (props.map) loadMarkers();
-});
+onMounted(fetchVesselData);
 </script>
+
+<template>
+  <AdvancedMarker
+    v-for="(marker, index) in vesselMarkers"
+    :key="`vessel-marker-${index}`"
+    :options="{ position: marker.position }"
+  />
+</template>
