@@ -1,22 +1,22 @@
 <template>
   <div ref="map" class="map-container" />
+  <VesselMarkers v-if="googleMap" :map="googleMap" />
 </template>
 
 <script setup>
 import { onMounted, ref, nextTick } from "vue";
+import VesselMarkers from "@/components/VesselMarkers.vue";
 
 const map = ref(null);
+const googleMap = ref(null);
 let googleMapsPromise = null;
 
 const loadGoogleMaps = async (apiKey) => {
-  // If Google Maps already available, skip loading
   if (window.google?.maps) return;
 
-  // If script is already being loaded, wait for it
   if (!googleMapsPromise) {
     googleMapsPromise = new Promise((resolve, reject) => {
       const existingScript = document.querySelector("script[src*='maps.googleapis.com']");
-
       if (existingScript) {
         existingScript.addEventListener("load", resolve, { once: true });
         existingScript.addEventListener(
@@ -31,7 +31,6 @@ const loadGoogleMaps = async (apiKey) => {
       script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
       script.async = true;
       script.defer = true;
-
       script.addEventListener("load", resolve, { once: true });
       script.addEventListener("error", () => reject(new Error("Google Maps failed to load.")), {
         once: true,
@@ -55,10 +54,10 @@ const initMap = async () => {
     await nextTick();
     await loadGoogleMaps(apiKey);
 
-    new window.google.maps.Map(map.value, {
-      center: { lat: 40.7128, lng: -74.006 }, // New York City
-      zoom: 5,
-      mapId: "DEMO_MAP_ID", // Optional
+    googleMap.value = new window.google.maps.Map(map.value, {
+      center: { lat: 0.7128, lng: -0.006 },
+      zoom: 4,
+      mapId: "DEMO_MAP_ID",
     });
   } catch (err) {
     console.error("🛑 Failed to initialize map:", err);
