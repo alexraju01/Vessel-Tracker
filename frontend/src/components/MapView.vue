@@ -3,7 +3,7 @@ import { GoogleMap } from "vue3-google-map";
 import VesselMarkers from "./VesselMarkers.vue";
 import { onMounted } from "vue";
 
-const center = { lat: 40.689247, lng: -74.044502 };
+const center = { lat: 0, lng: 0 };
 
 const { vessels } = defineProps({
   vessels: {
