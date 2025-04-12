@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { Pencil, Trash2 } from "lucide-vue-next";
 
 const props = defineProps({
@@ -14,6 +14,11 @@ const emit = defineEmits(["vessel-selected", "vessel-deleted", "vessel-edited"])
 const selectedVesselId = ref(null);
 const editingVesselId = ref(null);
 const editedVessel = ref({ name: "", latitude: 0, longitude: 0 });
+const searchQuery = ref("");
+
+const filteredVessels = computed(() =>
+  props.vessels.filter((v) => v.name.toLowerCase().includes(searchQuery.value.toLowerCase()))
+);
 
 const isEditing = (id) => editingVesselId.value === id;
 
@@ -66,9 +71,16 @@ const saveVessel = async () => {
   <div class="sidebar-container">
     <div class="vessel-count">Total Vessels: {{ props.vessels.length }}</div>
 
+    <input
+      v-model="searchQuery"
+      type="search"
+      placeholder="Search vessels by name"
+      class="search-input"
+    />
+
     <ul class="vessel-list">
       <li
-        v-for="vessel in props.vessels"
+        v-for="vessel in filteredVessels"
         :key="`vessel-${vessel._id}`"
         @click="selectVessel(vessel)"
         :class="['vessel-item', { selected: vessel._id === selectedVesselId }]"
@@ -191,5 +203,14 @@ button {
   font-size: 0.9rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.4rem 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
 }
 </style>
