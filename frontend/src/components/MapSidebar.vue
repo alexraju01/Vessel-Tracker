@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import { Pencil, Trash2 } from "lucide-vue-next";
+import VesselSearch from "./VesselSearch.vue";
 
 const props = defineProps({
   vessels: {
@@ -71,12 +72,7 @@ const saveVessel = async () => {
   <div class="sidebar-container">
     <div class="vessel-count">Total Vessels: {{ props.vessels.length }}</div>
 
-    <input
-      v-model="searchQuery"
-      type="search"
-      placeholder="Search vessels by name"
-      class="search-input"
-    />
+    <VesselSearch v-model="searchQuery" />
 
     <ul class="vessel-list">
       <li
@@ -203,14 +199,5 @@ button {
   font-size: 0.9rem;
   border: 1px solid #ccc;
   border-radius: 4px;
-}
-
-.search-input {
-  width: 100%;
-  padding: 0.4rem 0.5rem;
-  margin-bottom: 1rem;
-  font-size: 0.95rem;
-  border-radius: 4px;
-  border: 1px solid #ccc;
 }
 </style>
