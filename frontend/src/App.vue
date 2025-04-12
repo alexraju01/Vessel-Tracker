@@ -34,6 +34,18 @@ const handleVesselAdded = (newVessel) => {
   vessels.value.push(newVessel); // Vessel will immediately show
 };
 
+const handleVesselEdited = (updatedVessel) => {
+  const index = vessels.value.findIndex((v) => v._id === updatedVessel._id);
+  if (index !== -1) {
+    const newVessel = structuredClone(updatedVessel);
+    vessels.value.splice(index, 1, newVessel);
+  }
+
+  if (selectedVessel.value?._id === updatedVessel._id) {
+    selectedVessel.value = updatedVessel;
+  }
+};
+
 onMounted(() => {
   fetchVessels();
 });
@@ -46,6 +58,7 @@ onMounted(() => {
       :vessels="vessels"
       @vessel-selected="handleVesselSelected"
       @vessel-deleted="handleVesselDeleted"
+      @vessel-edited="handleVesselEdited"
     />
     <MapView :vessels="vessels" :center-vessel="selectedVessel" @vessel-added="handleVesselAdded" />
   </main>
