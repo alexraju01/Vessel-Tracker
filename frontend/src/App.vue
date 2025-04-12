@@ -18,9 +18,17 @@ const fetchVessels = async () => {
   }
 };
 
-// Handle sidebar click
+// Handle vessel selection
 const handleVesselSelected = (vessel) => {
   selectedVessel.value = vessel;
+};
+
+// Handle vessel deletion (triggered by MapSidebar)
+const handleVesselDeleted = (id) => {
+  vessels.value = vessels.value.filter((v) => v._id !== id);
+  if (selectedVessel.value?._id === id) {
+    selectedVessel.value = null;
+  }
 };
 
 onMounted(() => {
@@ -30,7 +38,12 @@ onMounted(() => {
 
 <template>
   <main class="main-layout">
-    <MapSidebar class="sidebar" :vessels="vessels" @vessel-selected="handleVesselSelected" />
+    <MapSidebar
+      class="sidebar"
+      :vessels="vessels"
+      @vessel-selected="handleVesselSelected"
+      @vessel-deleted="handleVesselDeleted"
+    />
     <MapView :vessels="vessels" :center-vessel="selectedVessel" />
   </main>
 </template>
