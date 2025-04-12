@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { Pencil, Trash2 } from "lucide-vue-next";
-import { useVesselApi } from "../utils/useVesselApi";
+import { updateVessel, deleteVesselById } from "@/services/vesselServices";
 
 const props = defineProps({
   vessel: Object,
@@ -12,7 +12,6 @@ const props = defineProps({
 const emit = defineEmits(["select", "delete", "edit", "start-editing", "cancel-editing"]);
 
 const editedVessel = ref({ ...props.vessel });
-const { updateVessel, deleteVesselById } = useVesselApi();
 
 const save = async () => {
   try {
