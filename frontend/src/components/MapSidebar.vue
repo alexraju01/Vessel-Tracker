@@ -2,6 +2,8 @@
 <script setup>
 import { ref } from "vue";
 
+import { Pencil, Trash2 } from "lucide-vue-next";
+
 const { vessels } = defineProps({
   vessels: {
     type: Array,
@@ -49,7 +51,12 @@ const deleteVessel = async (id) => {
         <p><strong>Name:</strong> {{ vessel.name }}</p>
         <p><strong>Lat:</strong> {{ vessel.latitude.toFixed(2) }}</p>
         <p><strong>Lng:</strong> {{ vessel.longitude.toFixed(2) }}</p>
-        <button @click.stop="deleteVessel(id)">Delete</button>
+        <div class="action-tool">
+          <button class="delete" @click.stop="deleteVessel(id)">
+            <Trash2 class="icons-size" />
+          </button>
+          <button class="edit" @click.stop=""><Pencil class="icons-size" /></button>
+        </div>
       </li>
     </ul>
   </div>
@@ -92,9 +99,13 @@ const deleteVessel = async (id) => {
   background-color: #ebf8ff;
 }
 
+.action-tool {
+  display: flex;
+  justify-content: space-between;
+}
+
 button {
   margin-top: 0.5rem;
-  background-color: #e53e3e;
   color: white;
   border: none;
   padding: 0.25rem 0.5rem;
@@ -102,7 +113,18 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.icons-size {
+  width: 1rem;
+}
+.delete {
+  background-color: #e53e3e;
+}
+
+.delete:hover {
   background-color: #c53030;
+}
+
+.edit {
+  background-color: #3ebee5;
 }
 </style>
