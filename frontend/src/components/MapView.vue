@@ -1,9 +1,9 @@
 <script setup>
 import { GoogleMap } from "vue3-google-map";
 import VesselMarkers from "./VesselMarkers.vue";
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 
-const props = defineProps({
+const { vessels, centerVessel } = defineProps({
   vessels: {
     type: Array,
     default: () => [],
@@ -15,9 +15,10 @@ const props = defineProps({
 });
 
 const center = ref({ lat: 0, lng: 0 });
+const userMarkers = ref([]);
 
 watch(
-  () => props.centerVessel,
+  () => centerVessel,
   (newVessel) => {
     if (newVessel?.latitude && newVessel?.longitude) {
       center.value = {
@@ -27,6 +28,33 @@ watch(
     }
   }
 );
+
+const emit = defineEmits(["vessel-added"]);
+
+const handleMapDblClick = async (event) => {
+  const lat = event.latLng.lat();
+  const lng = event.latLng.lng();
+  const name = prompt("Enter marker name:");
+  if (!name) return;
+
+  const newMarker = { name, latitude: lat, longitude: lng };
+
+  try {
+    const response = await fetch("http://localhost:3000/api/vessels/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newMarker),
+    });
+
+    const savedMarker = await response.json();
+    emit("vessel-added", savedMarker); // 🔥 Notify parent
+  } catch (error) {
+    console.error("Failed to post marker:", error);
+  }
+};
+
+// Combine backend vessels with user-added markers
+const allVessels = computed(() => [...vessels, ...userMarkers.value]);
 </script>
 
 <template>
@@ -36,11 +64,8 @@ watch(
     mapId="b3dd8a6215269852"
     :center="center"
     :zoom="6"
+    @dblclick="handleMapDblClick"
   >
-    <VesselMarkers :vessels="vessels" />
+    <VesselMarkers :vessels="allVessels" />
   </GoogleMap>
 </template>
-
-<style scoped>
-/* You can leave this empty or add map-specific container styles if needed */
-</style>

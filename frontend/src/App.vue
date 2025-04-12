@@ -26,9 +26,12 @@ const handleVesselSelected = (vessel) => {
 // Handle vessel deletion (triggered by MapSidebar)
 const handleVesselDeleted = (id) => {
   vessels.value = vessels.value.filter((v) => v._id !== id);
-  if (selectedVessel.value?._id === id) {
-    selectedVessel.value = null;
-  }
+  if (selectedVessel.value?._id === id) selectedVessel.value = null;
+};
+
+// Handle new vessel addition from MapView
+const handleVesselAdded = (newVessel) => {
+  vessels.value.push(newVessel); // Vessel will immediately show
 };
 
 onMounted(() => {
@@ -44,7 +47,7 @@ onMounted(() => {
       @vessel-selected="handleVesselSelected"
       @vessel-deleted="handleVesselDeleted"
     />
-    <MapView :vessels="vessels" :center-vessel="selectedVessel" />
+    <MapView :vessels="vessels" :center-vessel="selectedVessel" @vessel-added="handleVesselAdded" />
   </main>
 </template>
 
