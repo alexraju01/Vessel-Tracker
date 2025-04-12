@@ -4,20 +4,23 @@ import MapSidebar from "@/components/MapSidebar.vue";
 import MapView from "@/components/MapView.vue";
 
 const vessels = ref([]);
+const selectedVessel = ref(null);
 
-// Fetch vessels using native fetch
+// Fetch vessels from API
 const fetchVessels = async () => {
   try {
     const response = await fetch("http://localhost:3000/api/vessels");
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const { data } = await response.json();
     vessels.value = data;
   } catch (error) {
     console.error("Failed to fetch vessels:", error);
   }
+};
+
+// Handle sidebar click
+const handleVesselSelected = (vessel) => {
+  selectedVessel.value = vessel;
 };
 
 onMounted(() => {
@@ -27,10 +30,8 @@ onMounted(() => {
 
 <template>
   <main class="main-layout">
-    <MapSidebar class="sidebar" :vessels="vessels" />
-    <MapView :vessels="vessels" />
-
-    <!-- <MapView :vessels="vessels" /> -->
+    <MapSidebar class="sidebar" :vessels="vessels" @vessel-selected="handleVesselSelected" />
+    <MapView :vessels="vessels" :center-vessel="selectedVessel" />
   </main>
 </template>
 

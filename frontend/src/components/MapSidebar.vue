@@ -1,42 +1,46 @@
 <script setup>
+import { ref } from "vue";
+
 const { vessels } = defineProps({
   vessels: {
     type: Array,
     default: () => [],
   },
 });
+
+const emit = defineEmits(["vessel-selected"]);
+const selectedVesselId = ref(null);
+
+const selectVessel = (vessel) => {
+  selectedVesselId.value = vessel._id;
+  emit("vessel-selected", vessel);
+};
 </script>
 
 <template>
-  <aside class="sidebar">
-    <h2 class="sidebar-title">Vessel List</h2>
+  <div class="sidebar-container">
     <ul class="vessel-list">
-      <li v-for="(vessel, index) in vessels" :key="`vessel-${index}`" class="vessel-item">
-        <p><strong>ID:</strong> {{ vessel.id }}</p>
+      <li
+        v-for="{ _id: id, ...vessel } in vessels"
+        :key="`vessel-${id}`"
+        @click="selectVessel({ _id: id, ...vessel })"
+        :class="['vessel-item', { selected: id === selectedVesselId }]"
+      >
         <p><strong>Name:</strong> {{ vessel.name }}</p>
-
         <p><strong>Lat:</strong> {{ vessel.latitude.toFixed(2) }}</p>
         <p><strong>Lng:</strong> {{ vessel.longitude.toFixed(2) }}</p>
       </li>
     </ul>
-  </aside>
+  </div>
 </template>
 
 <style scoped>
-.sidebar {
+.sidebar-container {
   padding: 1rem;
-  width: 300px;
-  background-color: #ffffff;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
-  height: 100vh;
-  color: black;
-}
-
-.sidebar-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+  height: 100%;
+  background-color: #f9f9f9;
+  border-right: 1px solid #ddd;
 }
 
 .vessel-list {
@@ -46,15 +50,21 @@ const { vessels } = defineProps({
 }
 
 .vessel-item {
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.25rem;
+  cursor: pointer;
+  border-radius: 4px;
   background-color: #f3f3f3;
-  padding: 0.75rem;
-  border-radius: 5px;
-  margin-bottom: 0.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  transition: background-color 0.2s ease;
+  border: 2px solid transparent; /* Reserve space */
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .vessel-item:hover {
-  background-color: #e2e2e2;
+  background-color: #dbeafe;
+}
+
+.vessel-item.selected {
+  border-color: #3182ce; /* Just change the color */
+  background-color: #ebf8ff;
 }
 </style>
