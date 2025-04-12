@@ -38,7 +38,7 @@ const deleteVessel = async (id) => {
 
 <template>
   <div class="sidebar-container">
-    <div>Total: {{ vessels.length }}</div>
+    <div class="vessel-count">Total Vessels: {{ vessels.length }}</div>
     <ul class="vessel-list">
       <li
         v-for="{ _id: id, ...vessel } in vessels"
@@ -57,25 +57,28 @@ const deleteVessel = async (id) => {
 
 <style scoped>
 .sidebar-container {
-  padding: 1rem;
+  padding: 1rem 0.5rem;
+
+  height: 100vh;
   overflow-y: auto;
-  height: 100%;
   background-color: #f9f9f9;
   border-right: 1px solid #ddd;
 }
 
+.vessel-count {
+  margin-bottom: 1rem;
+}
+
 .vessel-list {
   list-style: none;
-  padding: 0;
-  margin: 0;
 }
 
 .vessel-item {
   padding: 0.5rem 0.75rem;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.35rem;
   cursor: pointer;
   border-radius: 4px;
-  background-color: #f3f3f3;
+  background-color: #e9e8e8;
   border: 2px solid transparent;
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
