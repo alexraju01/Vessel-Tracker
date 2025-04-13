@@ -57,13 +57,13 @@ By establishing a robust backend first, I was able to create a foundation that s
 ---
 
 ### 2. 🖥 Backend Development
-- [ ] Create `backend` and `frontend` folder
-- [ ] Initialized a `Node.js` project with `Express` in `backend` folder.
-- [ ] Defined the **`Vessel`** model with fields:
+- [x] Create `backend` and `frontend` folder
+- [x] Initialized a `Node.js` project with `Express` in `backend` folder.
+- [x] Defined the **`Vessel`** model with fields:
   - `id`, `name`, `latitude`, `longitude`, `createdAt`
-- [ ] Created REST endpoints for:
+- [x] Created REST endpoints for:
   - `GET`, `POST`, `PUT`, `DELETE` vessels.
-- [ ] Connected to MongoDB via Mongoose.
-- [ ] Used environment variables for DB config.
+- [x] Connected to MongoDB via Mongoose.
+- [x] Used environment variables for DB config.
 
 
