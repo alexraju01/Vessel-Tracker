@@ -1,5 +1,15 @@
 // utils/fetchData.js
 
+/**
+ * Fetches data from a given URL using the Fetch API.
+ *
+ * @async
+ * @function fetchData
+ * @param {string} url - The endpoint to send the request to.
+ * @param {string} method - The HTTP method to use (e.g., "GET", "POST", "PUT", "DELETE").
+ * @param {Object|null} data - The request payload for methods like POST or PUT.
+ * @param {Object} headers - Additional headers to include in the request.
+ */
 export const fetchData = async ({
   url,
   method = "GET",

@@ -1,4 +1,3 @@
-// @ts-check
 // src/utils/sortVessels.js
 
 /**

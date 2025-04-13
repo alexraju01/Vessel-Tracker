@@ -2,19 +2,18 @@
 import { ref, onMounted } from "vue";
 import MapSidebar from "@/components/MapSidebar.vue";
 import MapView from "@/components/MapView.vue";
+import { fetchVessels } from "./services/vesselServices";
 
 const vessels = ref([]);
 const selectedVessel = ref(null);
 
-// Fetch vessels from API
-const fetchVessels = async () => {
+// Load vessels from API
+const loadVessels = async () => {
   try {
-    const response = await fetch("http://localhost:3000/api/vessels");
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    const { data } = await response.json();
+    const data = await fetchVessels();
     vessels.value = data;
   } catch (error) {
-    console.error("Failed to fetch vessels:", error);
+    console.error("Error loading vessels:", error.message);
   }
 };
 
@@ -47,7 +46,7 @@ const handleVesselEdited = (updatedVessel) => {
 };
 
 onMounted(() => {
-  fetchVessels();
+  loadVessels();
 });
 </script>
 
