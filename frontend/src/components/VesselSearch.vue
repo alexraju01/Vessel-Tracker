@@ -17,7 +17,6 @@ const emit = defineEmits(["update:modelValue"]);
 .search-input {
   width: 100%;
   padding: 0.4rem 0.5rem;
-  margin-bottom: 1rem;
   font-size: 0.95rem;
   border-radius: 4px;
   border: 1px solid #ccc;
