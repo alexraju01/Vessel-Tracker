@@ -66,7 +66,15 @@ git clone https://github.com/alexraju01/Vessel-Tracker.git
 cd Vessel-Tracker
 ```
 
-### 2. Install Dependencies & Run the Backend Server
+### 2. Set Up Environment Variables
+  ```bash
+touch .env
+echo 'MONGO_DB_URI="YOUR MONGO_DB_URI"' >> .env
+echo 'PORT=3000' >> .env
+
+```
+
+### 3. Install Dependencies & Run the Backend Server
 
 ```bash
 cd backend
@@ -74,7 +82,7 @@ npm i
 npm run dev 
 ```
 
-### 3. Run the front Server
+### 4. Run the Frontend
 
 ```bash
 cd ../backend
