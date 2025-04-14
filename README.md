@@ -17,7 +17,7 @@ This project was built for a client in the marine industry to visually track and
 | **Frontend** | Vue.js            | Reactive UI, component-based, lightweight for SPAs                       |
 | **Map API**  | Google Maps API   | Industry-standard map platform, rich documentation and marker support   |
 | **Backend**  | Node.js + Express | Fast, scalable RESTful API layer                                        |
-| **Database** | MongoDB           | NoSQL, flexible schema, ideal for geolocation data                      |
+| **Database** | MongoDB + mongoose | NoSQL, flexible schema, ideal for geolocation data                      |
 
 ---
 
@@ -49,21 +49,39 @@ I will first approach the development with the backend for several strategic rea
 
 - **Data-First Approach:** Defining the schema and API endpoints early allowed me to finalize how vessel data would be structured, stored, and manipulated.
 - **API Contract Clarity:** Having working APIs from the start ensured that frontend development could progress independently, knowing exactly what data formats to expect.
-- **Decoupling Logic from UI:** This approach enabled me to test and validate business logic independently of the UI, improving debugging and testing efficiency.
-
-By establishing a robust backend first, I was able to create a foundation that supports the frontend and ensures smooth future scalability—for example, adding authentication or analytics.
-
 
 ---
 
-### 2. 🖥 Backend Development
-- [x] Create `backend` and `frontend` folder
-- [x] Initialized a `Node.js` project with `Express` in `backend` folder.
-- [x] Defined the **`Vessel`** model with fields:
-  - `id`, `name`, `latitude`, `longitude`, `createdAt`
-- [x] Created REST endpoints for:
-  - `GET`, `POST`, `PUT`, `DELETE` vessels.
-- [x] Connected to MongoDB via Mongoose.
-- [x] Used environment variables for DB config.
+## 📦 Installation & Setup
+Prerequisites:
+- Node.js v22.14.0 or later
 
+  
+To get started with Starlight on your local machine, follow these steps:
 
+### 1. Clone the Repository
+
+```bash
+https://github.com/alexraju01/Vessel-Tracker.git
+cd Vessel-Tracker
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install  # or yarn install
+```
+
+### 3. Run the Backend Server
+
+```bash
+cd backend
+npm run dev # or yarn dev 
+```
+
+### 4. Run the front Server
+
+```bash
+cd ../backend
+npm run dev # or yarn dev 
+```
