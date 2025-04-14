@@ -62,7 +62,7 @@ To get started with Starlight on your local machine, follow these steps:
 ### 1. Clone the Repository
 
 ```bash
-https://github.com/alexraju01/Vessel-Tracker.git
+git clone https://github.com/alexraju01/Vessel-Tracker.git
 cd Vessel-Tracker
 ```
 
