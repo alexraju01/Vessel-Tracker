@@ -3,7 +3,9 @@ import { ref, onMounted } from "vue";
 import MapSidebar from "@/components/MapSidebar.vue";
 import MapView from "@/components/MapView.vue";
 import { fetchVessels } from "./services/vesselServices";
+import { useToast } from "vue-toastification";
 
+const toast = useToast();
 const vessels = ref([]);
 const selectedVessel = ref(null);
 
@@ -12,8 +14,14 @@ const loadVessels = async () => {
   try {
     const data = await fetchVessels();
     vessels.value = data;
-  } catch (error) {
-    console.error("Error loading vessels:", error.message);
+  } catch {
+    toast.error("Failed to load vessels. Please try refeshing the page.", {
+      closeOnClick: true,
+      pauseOnHover: true,
+      position: "bottom-right",
+      toastClassName: "custom-toast-error",
+      bodyClassName: "custom-toast-body",
+    });
   }
 };
 
@@ -65,6 +73,7 @@ onMounted(() => {
 
 <style scoped>
 .main-layout {
+  position: relative;
   display: flex;
   height: 100vh;
   width: 100%;
