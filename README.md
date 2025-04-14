@@ -86,6 +86,6 @@ npm run dev
 
 ```bash
 cd ../backend
-npm i  # or yarn install
+npm i
 npm run dev 
 ```
