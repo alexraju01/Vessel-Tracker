@@ -66,22 +66,18 @@ git clone https://github.com/alexraju01/Vessel-Tracker.git
 cd Vessel-Tracker
 ```
 
-### 2. Install Dependencies
-
-```bash
-npm install  # or yarn install
-```
-
-### 3. Run the Backend Server
+### 2. Install Dependencies & Run the Backend Server
 
 ```bash
 cd backend
-npm run dev # or yarn dev 
+npm i  # or yarn install
+npm run dev 
 ```
 
-### 4. Run the front Server
+### 3. Run the front Server
 
 ```bash
 cd ../backend
-npm run dev # or yarn dev 
+npm i  # or yarn install
+npm run dev 
 ```
