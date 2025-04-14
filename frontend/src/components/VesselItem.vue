@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { Pencil, Trash2 } from "lucide-vue-next";
 import { updateVessel, deleteVesselById } from "@/services/vesselServices";
+import { showErrorToast, showSuccessToast } from "@/utils/toastUtils";
 
 const props = defineProps({
   vessel: Object,
@@ -17,9 +18,10 @@ const save = async () => {
   try {
     const updated = await updateVessel(editedVessel.value._id, editedVessel.value);
     emit("edit", updated);
+    showSuccessToast("Successfully updated vessel data");
     emit("cancel-editing");
   } catch {
-    alert("Failed to save");
+    showErrorToast("Failed to save");
   }
 };
 
@@ -27,8 +29,9 @@ const handleDelete = async () => {
   try {
     await deleteVesselById(props.vessel._id);
     emit("delete");
+    showSuccessToast("successfully deleted the vessel");
   } catch {
-    alert("Delete failed");
+    showErrorToast("Failed to delete vessel");
   }
 };
 </script>

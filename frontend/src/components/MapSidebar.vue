@@ -85,6 +85,7 @@ const handleEdit = (vessel) => emit("vessel-edited", vessel);
       @start-editing="(id) => (editingVesselId = id)"
       @cancel-editing="() => (editingVesselId = null)"
     />
+    
   </div>
 </template>
 

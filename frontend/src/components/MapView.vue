@@ -47,7 +47,7 @@ const handleMapDblClick = async (event) => {
     });
 
     const savedMarker = await response.json();
-    emit("vessel-added", savedMarker); // 🔥 Notify parent
+    emit("vessel-added", savedMarker); // Notify parent
   } catch (error) {
     console.error("Failed to post marker:", error);
   }
