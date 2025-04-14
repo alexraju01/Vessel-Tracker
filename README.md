@@ -17,7 +17,7 @@ This project was built for a client in the marine industry to visually track and
 | **Frontend** | Vue.js            | Reactive UI, component-based, lightweight for SPAs                       |
 | **Map API**  | Google Maps API   | Industry-standard map platform, rich documentation and marker support   |
 | **Backend**  | Node.js + Express | Fast, scalable RESTful API layer                                        |
-| **Database** | MongoDB + mongoose | NoSQL, flexible schema, ideal for geolocation data                      |
+| **Database** | MongoDB + Mongoose | NoSQL, flexible schema, ideal for geolocation data                      |
 
 ---
 
