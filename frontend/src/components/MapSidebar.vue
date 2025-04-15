@@ -1,48 +1,58 @@
 <script setup>
-import { ref, computed } from "vue";
-import VesselSearch from "./VesselSearch.vue";
-import VesselList from "./VesselList.vue";
-import { sortVessels } from "@/utils/sortVessels";
-import { ArrowDownZA, ArrowUpAz, ClockArrowDown, ClockArrowUp } from "lucide-vue-next";
+import { ref, computed } from "vue"; // Vue composition API
+import VesselSearch from "./VesselSearch.vue"; // Search input component
+import VesselList from "./VesselList.vue"; // List display component
+import { sortVessels } from "@/utils/sortVessels"; // Custom sorting function
+import { ArrowDownZA, ArrowUpAz, ClockArrowDown, ClockArrowUp } from "lucide-vue-next"; // Icons for sorting buttons
 
+// Props passed to this component
 const props = defineProps({
   vessels: {
     type: Array,
-    default: () => [],
+    default: () => [], // Default to empty array if none provided
   },
 });
 
+// Emit events back to the parent
 const emit = defineEmits(["vessel-selected", "vessel-deleted", "vessel-edited"]);
 
-const searchQuery = ref("");
-const selectedVesselId = ref(null);
-const editingVesselId = ref(null);
+// Reactive states
+const searchQuery = ref(""); // Search input text
+const selectedVesselId = ref(null); // ID of the currently selected vessel
+const editingVesselId = ref(null); // ID of the vessel being edited
 
-const sortField = ref("name");
-const sortAscending = ref(true);
+const sortField = ref("name"); // Default sorting field
+const sortAscending = ref(true); // Default sorting direction (ascending)
 
+// Function to change sorting field or toggle direction
 const setSortField = (field) => {
   if (sortField.value === field) {
-    sortAscending.value = !sortAscending.value;
+    sortAscending.value = !sortAscending.value; // Toggle if same field
   } else {
     sortField.value = field;
-    sortAscending.value = true;
+    sortAscending.value = true; // Reset to ascending for new field
   }
 };
 
+// Computed value to filter and sort vessels based on user input
 const filteredVessels = computed(() => {
-  const query = searchQuery.value.toLowerCase();
+  const query = searchQuery.value.toLowerCase(); // Normalize query
   const vessels = props.vessels ?? [];
 
+  // Filter vessels by name matching the query
   const filtered = vessels.filter(({ name }) => name.toLowerCase().includes(query));
 
+  // Return sorted result using the utility function
   return sortVessels(filtered, sortField.value, sortAscending.value);
 });
+
+// Select a vessel and emit the event to the parent
 const selectVessel = (vessel) => {
   selectedVesselId.value = vessel._id;
   emit("vessel-selected", vessel);
 };
 
+// Emit delete and edit actions to the parent
 const handleDelete = (id) => emit("vessel-deleted", id);
 const handleEdit = (vessel) => emit("vessel-edited", vessel);
 </script>
@@ -85,7 +95,6 @@ const handleEdit = (vessel) => emit("vessel-edited", vessel);
       @start-editing="(id) => (editingVesselId = id)"
       @cancel-editing="() => (editingVesselId = null)"
     />
-    
   </div>
 </template>
 
