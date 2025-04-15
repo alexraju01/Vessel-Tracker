@@ -2,9 +2,10 @@
 import { computed, ref } from "vue";
 import { Clock, Pencil, Trash2 } from "lucide-vue-next";
 import { updateVessel, deleteVesselById } from "@/services/vesselServices";
-import { showErrorToast, showSuccessToast } from "@/utils/toastUtils";
+import { showErrorToast, showSuccessToast, showWarningToast } from "@/utils/toastUtils";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { isWater } from "@/utils/isWater";
 
 dayjs.extend(relativeTime);
 
@@ -20,7 +21,17 @@ const editedVessel = ref({ ...props.vessel });
 
 const save = async () => {
   try {
+    const { latitude, longitude } = editedVessel.value;
+    const inWater = await isWater(latitude, longitude);
+
+    if (!inWater) {
+      showWarningToast("The Lat/Lng u entered will be placed in land so we cannot save the values");
+      return;
+    }
+
     const updated = await updateVessel(editedVessel.value._id, editedVessel.value);
+    console.log("datatata", updated);
+
     emit("edit", updated);
     showSuccessToast("Successfully updated vessel data");
     emit("cancel-editing");
