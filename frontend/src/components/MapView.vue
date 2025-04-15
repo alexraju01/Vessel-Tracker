@@ -71,7 +71,7 @@ const isWater = async (lat, lng) => {
   }
 };
 
-const handleMapDblClick = async (event) => {
+const handleMapRightClick = async (event) => {
   const lat = event.latLng.lat();
   const lng = event.latLng.lng();
 
@@ -106,7 +106,7 @@ const allVessels = computed(() => [...vessels, ...userMarkers.value]);
     mapId="b3dd8a6215269852"
     :center="center"
     :zoom="6"
-    @dblclick="handleMapDblClick"
+    @rightclick="handleMapRightClick"
   >
     <VesselMarkers :vessels="allVessels" />
   </GoogleMap>
