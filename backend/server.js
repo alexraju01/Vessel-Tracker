@@ -14,5 +14,12 @@ app.use(express.json());
 
 app.use("/api/vessels", vesselRoutes);
 
+app.use((req, res) => {
+	res.status(404).json({
+		status: "fail",
+		message: `Route ${req.originalUrl} not found`,
+	});
+});
+
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => console.log(`Server running on port http://localhost:${PORT}`));
