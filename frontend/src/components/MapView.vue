@@ -2,6 +2,8 @@
 import { GoogleMap } from "vue3-google-map";
 import VesselMarkers from "./VesselMarkers.vue";
 import { ref, watch, computed } from "vue";
+import { addVessel } from "@/services/vesselServices";
+import { showErrorToast, showSuccessToast } from "@/utils/toastUtils";
 
 const { vessels, centerVessel } = defineProps({
   vessels: {
@@ -40,16 +42,11 @@ const handleMapDblClick = async (event) => {
   const newMarker = { name, latitude: lat, longitude: lng };
 
   try {
-    const response = await fetch("http://localhost:3000/api/vessels/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newMarker),
-    });
-
-    const savedMarker = await response.json();
-    emit("vessel-added", savedMarker); // Notify parent
-  } catch (error) {
-    console.error("Failed to post marker:", error);
+    const savedMarker = await addVessel(newMarker);
+    emit("vessel-added", savedMarker);
+    showSuccessToast("Successfully added a new vessel marker");
+  } catch {
+    showErrorToast("Failed to add vessel");
   }
 };
 

@@ -16,6 +16,21 @@ export const fetchVessels = async () => {
   }
 };
 
+export const addVessel = async (vesselData) => {
+  try {
+    const savedMarker = await fetchData({
+      url: baseUrl,
+      method: "POST",
+      data: vesselData,
+    });
+
+    return savedMarker;
+  } catch (error) {
+    console.error("Error adding vessel:", error.message);
+    throw error;
+  }
+};
+
 export const deleteVesselById = async (id) => {
   try {
     await fetchData({
