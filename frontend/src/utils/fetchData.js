@@ -1,67 +1,48 @@
-// utils/fetchData.js
-
-/**
- * Fetches data from a given URL using the Fetch API.
- *
- * @async
- * @function fetchData
- * @param {string} url - The endpoint to send the request to.
- * @param {string} method - The HTTP method to use (e.g., "GET", "POST", "PUT", "DELETE").
- * @param {Object|null} data - The request payload for methods like POST or PUT.
- * @param {Object} headers - Additional headers to include in the request.
- */
-export const fetchData = async ({
-  url,
-  method = "GET",
-  data = null,
-  headers = {},
-  customErrorHandler = null,
-}) => {
+export const fetchData = async ({ url, method = "GET", data = null, headers = {} }) => {
   try {
+    // Set default headers and add Content-Type for JSON
     const config = {
-      method,
+      method: method,
       headers: {
         "Content-Type": "application/json",
         ...headers,
       },
-      ...(data && { body: JSON.stringify(data) }),
     };
 
+    // If there's data, add it to the request body as a JSON string
+    if (data) config.body = JSON.stringify(data);
+
+    // Make the HTTP request
     const response = await fetch(url, config);
 
-    if (!response.ok) {
-      let errorDetails = "";
-      const contentType = response.headers.get("content-type");
+    // Get the content type from the response headers
+    const contentType = response.headers.get("content-type");
 
+    // If the response was not OK (status code not in 200–299)
+    if (!response.ok) {
+      let errorDetails;
+
+      // Try to parse the error as JSON if possible
       if (contentType && contentType.includes("application/json")) {
-        const errorJson = await response.json();
-        errorDetails = errorJson?.message || JSON.stringify(errorJson);
+        errorDetails = await response.json();
       } else {
         errorDetails = await response.text();
       }
 
-      const errorMessage = `Error ${response.status}: ${errorDetails}`;
-
-      if (customErrorHandler) {
-        customErrorHandler(errorMessage, response);
-      }
-
-      throw new Error(errorMessage);
+      // Create a friendly error message
+      const message = errorDetails?.message || JSON.stringify(errorDetails);
+      throw new Error(`Error ${response.status}: ${message}`);
     }
 
-    const contentType = response.headers.get("content-type");
+    // If the response is JSON, return it, otherwise return null
     if (contentType && contentType.includes("application/json")) {
       return await response.json();
+    } else {
+      return null;
     }
-
-    return null;
   } catch (error) {
+    // Log the error and rethrow it
     console.error("FetchData Error:", error.message);
-
-    if (customErrorHandler) {
-      customErrorHandler(error.message, null);
-    }
-
     throw error;
   }
 };
