@@ -68,6 +68,7 @@ cd Vessel-Tracker
 
 ### 2. Set Up Environment Variables
   ```bash
+cd backend
 touch .env
 echo 'MONGO_DB_URI="YOUR MONGO_DB_URI"' >> .env
 echo 'PORT=3000' >> .env
@@ -77,7 +78,6 @@ echo 'PORT=3000' >> .env
 ### 3. Install Dependencies & Run the Backend Server
 
 ```bash
-cd backend
 npm i
 npm run dev 
 ```
@@ -85,7 +85,7 @@ npm run dev
 ### 4. Run the Frontend
 
 ```bash
-cd ../backend
+cd ../frontend
 npm i
 npm run dev 
 ```
