@@ -3,7 +3,7 @@ import { GoogleMap } from "vue3-google-map";
 import VesselMarkers from "./VesselMarkers.vue";
 import { ref, watch, computed } from "vue";
 import { addVessel } from "@/services/vesselServices";
-import { showErrorToast, showSuccessToast } from "@/utils/toastUtils";
+import { showErrorToast, showSuccessToast, showWarningToast } from "@/utils/toastUtils";
 
 const { vessels, centerVessel } = defineProps({
   vessels: {
@@ -77,7 +77,7 @@ const handleMapDblClick = async (event) => {
 
   const checkWater = await isWater(lat, lng);
   if (!checkWater) {
-    alert("You can only place markers in water.");
+    showWarningToast("You can only place markers in water.");
     return;
   }
 

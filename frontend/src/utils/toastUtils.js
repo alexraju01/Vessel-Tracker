@@ -22,3 +22,13 @@ export const showSuccessToast = (message) => {
     bodyClassName: "custom-toast-body",
   });
 };
+
+export const showWarningToast = (message) => {
+  toast.warning(message, {
+    closeOnClick: true,
+    pauseOnHover: true,
+    position: "bottom-right",
+    toastClassName: "custom-toast-warning",
+    bodyClassName: "custom-toast-body",
+  });
+};
