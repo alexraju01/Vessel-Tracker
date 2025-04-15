@@ -78,7 +78,7 @@ const handleEdit = (vessel) => emit("vessel-edited", vessel);
           @click="setSortField('createdAt')"
           :class="['sort-button', sortField === 'createdAt' ? 'active' : '']"
         >
-          Created
+          CreatedBy
           <ClockArrowUp class="icons-size" v-if="sortField === 'createdAt' && sortAscending" />
           <ClockArrowDown class="icons-size" v-if="sortField === 'createdAt' && !sortAscending" />
         </button>
