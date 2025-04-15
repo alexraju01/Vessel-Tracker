@@ -1,8 +1,12 @@
 <script setup>
-import { ref } from "vue";
-import { Pencil, Trash2 } from "lucide-vue-next";
+import { computed, ref } from "vue";
+import { Clock, Pencil, Trash2 } from "lucide-vue-next";
 import { updateVessel, deleteVesselById } from "@/services/vesselServices";
 import { showErrorToast, showSuccessToast } from "@/utils/toastUtils";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 
 const props = defineProps({
   vessel: Object,
@@ -34,6 +38,8 @@ const handleDelete = async () => {
     showErrorToast("Failed to delete vessel");
   }
 };
+
+const createdTimeAgo = computed(() => dayjs(props.vessel.createdAt).fromNow());
 </script>
 
 <template>
@@ -64,6 +70,7 @@ const handleDelete = async () => {
           <Pencil class="icons-size" />
         </button>
       </div>
+      <p class="createdAt"><Clock :size="12" /> {{ createdTimeAgo }}</p>
     </template>
   </div>
 </template>
@@ -104,6 +111,7 @@ const handleDelete = async () => {
 .action-tool {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 0.2rem;
 }
 
 button {
@@ -139,5 +147,14 @@ button {
   font-size: 0.9rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+.createdAt {
+  display: flex;
+  gap: 0.1rem;
+  font-size: 12px;
+  align-items: center;
+  justify-content: flex-end;
+  color: gray;
 }
 </style>
