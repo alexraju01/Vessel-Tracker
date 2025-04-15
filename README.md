@@ -45,7 +45,7 @@ At the start of the project, I focused on planning a clean and scalable structur
 
 #### 🧠 Why I Started with the Backend
 
-I will first approach the development with the backend for several strategic reasons:
+I will first approach the development with the backend for the reasons:
 
 - **Data-First Approach:** Defining the schema and API endpoints early allowed me to finalize how vessel data would be structured, stored, and manipulated.
 - **API Contract Clarity:** Having working APIs from the start ensured that frontend development could progress independently, knowing exactly what data formats to expect.
@@ -68,6 +68,7 @@ cd Vessel-Tracker
 
 ### 2. Set Up Environment Variables
   ```bash
+cd backend
 touch .env
 echo 'MONGO_DB_URI="YOUR MONGO_DB_URI"' >> .env
 echo 'PORT=3000' >> .env
@@ -77,7 +78,6 @@ echo 'PORT=3000' >> .env
 ### 3. Install Dependencies & Run the Backend Server
 
 ```bash
-cd backend
 npm i
 npm run dev 
 ```
@@ -85,7 +85,7 @@ npm run dev
 ### 4. Run the Frontend
 
 ```bash
-cd ../backend
+cd ../frontend
 npm i
 npm run dev 
 ```
