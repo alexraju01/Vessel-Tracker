@@ -1,5 +1,5 @@
 <script setup>
-import { AdvancedMarker } from "vue3-google-map";
+import { CustomMarker } from "vue3-google-map";
 
 const props = defineProps({
   vessels: {
@@ -11,11 +11,20 @@ const props = defineProps({
 
 <template>
   <template v-for="(vessel, index) in props.vessels" :key="`marker-${index}`">
-    <AdvancedMarker
+    <CustomMarker
       :options="{
         position: { lat: vessel.latitude, lng: vessel.longitude },
-        title: vessel.name,
       }"
-    />
+    >
+      <div style="text-align: center">
+        <div style="font-size: 0.9rem; font-weight: bold">{{ vessel.name }}</div>
+        <img
+          :src="vessel.imageUrl || '/images/ship.png'"
+          width="40"
+          height="40"
+          style="margin-top: 4px"
+        />
+      </div>
+    </CustomMarker>
   </template>
 </template>
