@@ -1,7 +1,7 @@
 <script setup>
 import VesselItem from "./VesselItem.vue";
 
-const props = defineProps({
+defineProps({
   vessels: Array,
   selectedId: String,
   editingId: String,

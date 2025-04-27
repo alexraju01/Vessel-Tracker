@@ -55,10 +55,17 @@ const handleVesselEdited = (updatedVessel) => {
 onMounted(() => {
   loadVessels();
 
-  // Socket.io - Real-Time Updates
-  //custom realtime event
+  //custom realtime event - These event are same as the backend and must match
   socket.on("newVesselData", (newVessel) => {
     handleVesselAdded(newVessel);
+  });
+
+  socket.on("deleteVesselData", (id) => {
+    handleVesselDeleted(id);
+  });
+
+  socket.on("updateVesselData", (updatedVessel) => {
+    handleVesselEdited(updatedVessel);
   });
 });
 </script>
