@@ -6,6 +6,8 @@ const Vessel = require("../models/vessel");
 exports.addVessel = async (req, res) => {
 	const vessel = new Vessel(req.body);
 	await vessel.save();
+	// custom realtime event name
+	req.io.emit("newVesselData", vessel);
 	res.status(201).json(vessel);
 };
 
