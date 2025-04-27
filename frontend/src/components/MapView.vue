@@ -32,8 +32,6 @@ watch(
   }
 );
 
-const emit = defineEmits(["vessel-added"]);
-
 const handleMapRightClick = async (event) => {
   const lat = event.latLng.lat();
   const lng = event.latLng.lng();
@@ -50,8 +48,7 @@ const handleMapRightClick = async (event) => {
   const newMarker = { name, latitude: lat, longitude: lng };
 
   try {
-    const savedMarker = await addVessel(newMarker);
-    emit("vessel-added", savedMarker);
+    addVessel(newMarker);
     showSuccessToast("Successfully added a new vessel marker");
   } catch {
     showErrorToast("Failed to add vessel");

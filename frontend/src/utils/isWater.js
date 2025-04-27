@@ -9,7 +9,6 @@ export const isWater = async (lat, lng) => {
     console.log("Geocode response:", data);
 
     if (!data.results || data.results.length === 0) {
-      console.log("No results, assuming it's water.");
       return true;
     }
 
