@@ -17,6 +17,8 @@ exports.deleteVessel = async (req, res) => {
 
 	await Vessel.findByIdAndDelete(id);
 
+	req.io.emit("deleteVesselData", id);
+
 	res.status(204).json({
 		status: "success",
 		data: null,
@@ -33,13 +35,15 @@ exports.getVessels = async (req, res) => {
 // PUT update vessels
 exports.updateVessel = async (req, res) => {
 	const { id } = req.params;
-	const updatedVessal = await Vessel.findByIdAndUpdate(id, req.body, {
+	const updatedVessel = await Vessel.findByIdAndUpdate(id, req.body, {
 		new: true,
 	});
 
-	if (!updatedVessal) {
+	if (!updatedVessel) {
 		return res.status(404).json({ status: "fail", message: "Vessel not found" });
 	}
 
-	res.status(200).json({ status: "success", data: updatedVessal });
+	req.io.emit("updateVesselData", updatedVessel);
+
+	res.status(200).json({ status: "success", data: updatedVessel });
 };
