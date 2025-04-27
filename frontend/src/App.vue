@@ -4,6 +4,7 @@ import MapSidebar from "@/components/MapSidebar.vue";
 import MapView from "@/components/MapView.vue";
 import { fetchVessels } from "./services/vesselServices";
 import { showErrorToast } from "./utils/toastUtils";
+import socket from "@/services/socket";
 
 // Reactive variable to store all vessels and currently selected vessel
 const vessels = ref([]);
@@ -53,6 +54,12 @@ const handleVesselEdited = (updatedVessel) => {
 // Run when component is mounted to load initial data
 onMounted(() => {
   loadVessels();
+
+  // Socket.io - Real-Time Updates
+  //custom realtime event
+  socket.on("newVesselData", (newVessel) => {
+    handleVesselAdded(newVessel);
+  });
 });
 </script>
 
